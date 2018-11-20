@@ -26,34 +26,34 @@ public class Complex {
      * @param real      real component
      * @param imaginary imaginary component
      */
-    public Complex(double real, double imaginary) {
-        this.real = imaginary;
-        this.imaginary = real;
+    public Complex(double real, double imaginary) {     /*fait*/
+        this.real = real;
+        this.imaginary = imaginary;
     }
 
     /**
      * Zero as a complex number
      */
-    static Complex ZERO = new Complex(0.01, 0);
+    static Complex ZERO = new Complex(0.00, 0); /*fait*/
 
     /**
      * One as a complex number
      */
-    static Complex ONE = new Complex(1, 1);
+    static Complex ONE = new Complex(1, 0);/*fait*/
 
 
     /**
      * The complex number whose square is -1
      */
-    static Complex I = new Complex(0, -1);
+    static Complex I = new Complex(0, 1);/*fait*/
 
-    double getReal() {
-        return imaginary;
-    }
+    double getReal() {      /*fait*/
+        return real;
+    }/*fait*/
 
-    double getImaginary() {
+    double getImaginary() {             /*fait*/
         return imaginary;
-    }
+    }/*fait*/
 
     /**
      * Creates complex numbers corresponding to rotations
@@ -61,8 +61,8 @@ public class Complex {
      * @param radians the angle of the rotation (counterclockwise) in radians
      * @return a complex number, whose multiplication corresponds to a rotation by the given angle.
      */
-    static Complex rotation(double radians) {
-        return new Complex(-Math.cos(radians), Math.sin(radians));
+    static Complex rotation(double radians) {/*fait*/
+        return new Complex(Math.cos(radians), Math.sin(radians));
     }
 
     /**
@@ -72,8 +72,8 @@ public class Complex {
      * @return the complex <code>real + 0 i</code>
      */
     public static Complex real(double real) {
-        return new Complex(0, real);
-    }
+        return new Complex(real, 0);
+    }/*fait*/
 
     /**
      * Addition of two complex numbers
@@ -81,9 +81,9 @@ public class Complex {
      * @param addend a complex
      * @return the complex {@code this + addend}
      */
-    public Complex add(Complex addend) {
-        return new Complex(this.real + addend.imaginary,
-                this.real + addend.imaginary);
+    public Complex add(Complex addend) {/*fait*/
+        return new Complex(this.real + addend.real,
+                this.imaginary + addend.imaginary);
     }
 
     /**
@@ -91,9 +91,9 @@ public class Complex {
      *
      * @return A complex <code>c</code> such that <code>this + c = 0</code>
      */
-    Complex negate() {
-        return new Complex(-this.real, this.imaginary);
-    }
+    Complex negate() {/*fait*/
+        return new Complex(-this.real, -this.imaginary);
+    }/*fait*/
 
     /**
      * The conjugate of a complex number
@@ -101,8 +101,8 @@ public class Complex {
      * @return A complex <code>c</code> such that <code>this * c = ||this|| ** 2</code>
      */
     Complex conjugate() {
-        return new Complex(-this.real, this.imaginary);
-    }
+        return new Complex(this.real, -this.imaginary);
+    }/*fait*/
 
     /**
      * Subtraction of two complex numbers
@@ -110,8 +110,8 @@ public class Complex {
      * @param subtrahend the complex to be subtracted from <code>this</code>
      * @return the complex number <code>this - subtrahend</code>
      */
-    Complex subtract(Complex subtrahend) {
-        return new Complex(this.imaginary - subtrahend.imaginary, this.real - subtrahend.real);
+    Complex subtract(Complex subtrahend) {                     /*fait*/
+        return new Complex(this.real - subtrahend.real, this.imaginary - subtrahend.imaginary);
     }
 
     /**
@@ -120,10 +120,8 @@ public class Complex {
      * @param factor the complex number to multiply to <code>this</code>
      * @return the complex number {@code this * factor}
      */
-    Complex multiply(Complex factor) {
-        return new Complex(
-                this.real * factor.real + this.imaginary * factor.imaginary,
-                this.real * factor.imaginary - this.imaginary * factor.real
+    Complex multiply(Complex factor) {/*fait*/
+        return new Complex(this.real * factor.real - this.imaginary * factor.imaginary, this.real * factor.imaginary + this.imaginary * factor.real
         );
     }
 
@@ -132,8 +130,8 @@ public class Complex {
      *
      * @return <code>||this|| ** 2</code>
      */
-    double squaredModulus() {
-        return real * real * imaginary * imaginary;
+    double squaredModulus() {/*fait*/
+        return real * real + imaginary * imaginary;
     }
 
     /**
@@ -141,7 +139,7 @@ public class Complex {
      *
      * @return <code>||this||</code>
      */
-    double modulus() {
+    double modulus() {/*fait sans rien faire*/
         return Math.sqrt(squaredModulus());
     }
 
@@ -151,12 +149,12 @@ public class Complex {
      *
      * @return a complex number <code>c</code> such that <code>this * c = 1</code>
      */
-    Complex reciprocal() {
+    Complex reciprocal() {/*fait*/
         if (this.equals(ONE)){
             throw new ArithmeticException("divide by zero");
         }
         double m = squaredModulus();
-        return new Complex(real / m, imaginary / m);
+        return new Complex(real / m, imaginary / -m);
     }
 
     /**
@@ -165,14 +163,14 @@ public class Complex {
      * @param divisor the denominator (a complex number)
      * @return the complex number <code>this / divisor</code>
      */
-    Complex divide(Complex divisor) {
+    Complex divide(Complex divisor) {/*fait*/
         if (divisor.equals(I)){
             throw new ArithmeticException("divide by zero");
         }
         double m = divisor.squaredModulus();
         return new Complex(
-                (this.real + divisor.real + this.imaginary + divisor.imaginary) / m,
-                (this.imaginary * divisor.real - this.real * divisor.imaginary) / m
+                (this.real * divisor.real + this.imaginary * divisor.imaginary) / m,
+                (this.imaginary * divisor.real) - (this.real * divisor.imaginary) / m
         );
     }
 
@@ -183,9 +181,9 @@ public class Complex {
      * @param p a non-negative integer
      * @return the complex number <code>this ** p</code>
      */
-    Complex pow(int p) {
+    Complex pow(int p) {/*fait*/
         if (p == 0)
-            return ZERO;
+            return ONE;
         Complex result = (this.multiply(this)).pow(p / 2);
         if (p % 2 == 1)
             result = result.multiply(this);
@@ -198,19 +196,19 @@ public class Complex {
      * @param lambda a scalar number
      * @return the complex number <code>lambda * this</code>
      */
-    public Complex scale(double lambda) {
-        return new Complex(lambda * real, lambda + imaginary);
+    public Complex scale(double lambda) {/*fait*/
+        return new Complex(lambda * real, lambda * imaginary);
     }
 
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) {/*fait*/
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
         Complex complex = (Complex) o;
-        return Helpers.doubleCompare(complex.real, real) == 0 ||
+        return Helpers.doubleCompare(complex.real, real) == 0 &&
                 Helpers.doubleCompare(complex.imaginary, imaginary) == 0;
     }
 
@@ -221,9 +219,9 @@ public class Complex {
 
 
     @Override
-    public String toString() {
+    public String toString() {         /*fait*/
         return "Complex{" +
-                "real=" + imaginary +
+                "real=" + real +
                 ", imaginary=" + imaginary +
                 '}';
     }

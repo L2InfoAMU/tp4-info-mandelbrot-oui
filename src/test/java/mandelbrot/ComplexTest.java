@@ -133,4 +133,47 @@ public class ComplexTest {
         Complex c2 = new Complex(real, imaginary);
         assertEquals(c1.hashCode(), c2.hashCode());
     }
+    @Test
+    void testReal(){
+        assertEquals(new Complex(5,0),onePlusI.real(5));
+    }
+
+    @Test
+    void testAdd(){
+        assertEquals(new Complex(2,2),two.add(twoI));
+        assertEquals(minusI,minusOne.add(oneMinusI));
+    }
+    @Test
+    void testsubstract(){
+        assertEquals(oneMinusI,two.subtract(onePlusI));
+        assertEquals(new Complex(2,1),onePlusI.subtract(minusOne));
+    }
+    @Test
+    void testMultiply(){
+        assertEquals(new Complex(2,2),onePlusI.multiply(two));
+        assertEquals(new Complex(2,2),oneMinusI.multiply(twoI));
+    }
+    @Test
+    void testSquaredModolus(){
+    assertEquals(2,onePlusI.squaredModulus());
+    assertEquals(2,oneMinusI.squaredModulus());
+    assertEquals(4,two.squaredModulus());
+    }
+    @Test
+    void testPow(){
+        assertEquals(Complex.ONE,Complex.ZERO.pow(0));
+        assertEquals(new Complex(4,0),two.pow(2));
+    }
+    @Test
+    void testScale(){
+        assertEquals(new Complex(6,-6),oneMinusI.scale(6));
+        assertEquals(Complex.ZERO,Complex.ZERO.scale(500000000));
+    }
+
+    @Test
+    void testEquals(){
+        assertEquals(true,new Complex(0,0).equals(Complex.ZERO));
+        assertEquals(false,new Complex(0,0).equals(Complex.ONE));
+    }
+
 }
